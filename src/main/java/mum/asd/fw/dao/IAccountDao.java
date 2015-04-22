@@ -1,6 +1,6 @@
 package mum.asd.fw.dao;
 
-import mum.asd.fw.account.Account;
+import mum.asd.fw.account.IAccount;
 
-public interface IAccountDao extends GenericDao<Account> {
+public interface IAccountDao extends GenericDao<IAccount> {
 }

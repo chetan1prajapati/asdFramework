@@ -3,9 +3,9 @@ package mum.asd.fw.account;
 import mum.asd.fw.party.Customer;
 
 public abstract class Account implements IAccount {
-	Integer accnr;
-	Customer customer;
-	double balance;
+	protected Integer accnr;
+	protected Customer customer;
+	protected double balance;
 
 	public Account(Customer customer) {
 		this.customer = customer;
@@ -32,7 +32,6 @@ public abstract class Account implements IAccount {
 	}
 
 	public IEntry getEntry() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -43,7 +42,7 @@ public abstract class Account implements IAccount {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-	
+
 	public abstract Double getInterestRate();
 
 	@Override

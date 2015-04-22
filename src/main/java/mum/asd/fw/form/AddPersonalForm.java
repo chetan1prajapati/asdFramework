@@ -2,17 +2,20 @@ package mum.asd.fw.form;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 
 import mum.asd.fw.FWForm;
 import mum.asd.fw.FWTableModel;
-import mum.asd.fw.account.PersonalAccount;
+import mum.asd.fw.account.IAccount;
 import mum.asd.fw.controller.AddAccountController;
 import mum.asd.fw.gui.IForm;
 import mum.asd.fw.gui.SelectOneInput;
 import mum.asd.fw.party.Address;
 import mum.asd.fw.party.Person;
 import mum.asd.fw.service.AccountService;
+import asd.bankapp.account.CheckingAccount;
+import asd.bankapp.account.SavingAccount;
 
 public class AddPersonalForm extends FWForm {
 	// AddAccountController controller;
@@ -27,16 +30,23 @@ public class AddPersonalForm extends FWForm {
 		setTitle("Add personal account");
 		setModal(true);
 		getContentPane().setLayout(null);
-		setSize(283, 303);
+		setSize(283, 333);
 		setVisible(false);
+
 		JRadioButton_Chk.setText("Checkings");
 		JRadioButton_Chk.setActionCommand("Checkings");
 		getContentPane().add(JRadioButton_Chk);
 		JRadioButton_Chk.setBounds(36, 0, 84, 24);
+		JRadioButton_Chk.setSelected(true);
 		JRadioButton_Sav.setText("Savings");
 		JRadioButton_Sav.setActionCommand("Savings");
 		getContentPane().add(JRadioButton_Sav);
+		JRadioButton_Sav.setSelected(false);
 		JRadioButton_Sav.setBounds(36, 24, 84, 24);
+
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(JRadioButton_Chk);
+		bg.add(JRadioButton_Sav);
 		JLabel1.setText("Name");
 		getContentPane().add(JLabel1);
 		JLabel1.setForeground(java.awt.Color.black);
@@ -87,18 +97,8 @@ public class AddPersonalForm extends FWForm {
 		JButton_Cancel.setActionCommand("Cancel");
 		getContentPane().add(JButton_Cancel);
 		JButton_Cancel.setBounds(156, 264, 84, 24);
-		getContentPane().add(JTextField_ACNR);
-		JTextField_ACNR.setBounds(84, 60, 156, 20);
-		JLabel8.setText("Acc Nr");
-		getContentPane().add(JLabel8);
-		JLabel8.setForeground(java.awt.Color.black);
-		JLabel8.setBounds(12, 60, 48, 24);
-		// }}
 
 		// {{REGISTER_LISTENERS
-		SymMouse aSymMouse = new SymMouse();
-		JRadioButton_Chk.addMouseListener(aSymMouse);
-		JRadioButton_Sav.addMouseListener(aSymMouse);
 		SymAction lSymAction = new SymAction();
 		JButton_OK.addActionListener(lSymAction);
 		JButton_Cancel.addActionListener(lSymAction);
@@ -149,30 +149,7 @@ public class AddPersonalForm extends FWForm {
 
 	}
 
-	class SymMouse extends java.awt.event.MouseAdapter {
-		public void mouseClicked(java.awt.event.MouseEvent event) {
-			Object object = event.getSource();
-			if (object == JRadioButton_Chk)
-				JRadioButtonChk_mouseClicked(event);
-			else if (object == JRadioButton_Sav)
-				JRadioButtonSav_mouseClicked(event);
-		}
-	}
-
-	void JRadioButtonChk_mouseClicked(java.awt.event.MouseEvent event) {
-		// When Checking radio is clicked make this radio on
-		// and make Saving account radio off
-		JRadioButton_Chk.setSelected(true);
-		JRadioButton_Sav.setSelected(false);
-	}
-
-	void JRadioButtonSav_mouseClicked(java.awt.event.MouseEvent event) {
-		// When Saving radio is clicked make this radio on
-		// and make Checking account radio off
-		JRadioButton_Chk.setSelected(false);
-		JRadioButton_Sav.setSelected(true);
-
-	}
+	
 
 	class SymAction implements java.awt.event.ActionListener {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
@@ -185,17 +162,25 @@ public class AddPersonalForm extends FWForm {
 	}
 
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event) {
-		PersonalAccount acc = new PersonalAccount();
+
+		IAccount acc = null;
 		Address add = new Address(JTextField_STR.getText(),
 				JTextField_CT.getText(), JTextField_ST.getText(),
 				JTextField_ZIP.getText());
-		Person p = new Person(JTextField_ACNR.getText(), add,
+
+		Person p = new Person(JTextField_NAME.getText(), add,
 				JTextField_BD.getText());
-		acc.setCustomer(p);
+		if (JRadioButton_Chk.isSelected())
+			acc = new CheckingAccount(p);
+		else
+			acc = new SavingAccount(p);
+
 		controller.addPersonalAccount(acc);
 		model.refreshData();
 		model.fireTableDataChanged();
+
 		dispose();
+
 	}
 
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event) {

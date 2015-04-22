@@ -4,21 +4,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import mum.asd.fw.FWDialog;
 import mum.asd.fw.account.Account;
+import mum.asd.fw.account.IAccount;
 
 public class DialogButtonListener implements ActionListener,
 		ListSelectionListener {
-	int index;
-	List<Account> accounts;
+	int index = -1;
+	List<IAccount> accounts;
 	FWDialog dialog;
 	JTable table;
 
-	public DialogButtonListener(List<Account> list, FWDialog dialog,
+	public DialogButtonListener(List<IAccount> list, FWDialog dialog,
 			JTable table) {
 		this.accounts = list;
 		this.dialog = dialog;
@@ -26,10 +28,11 @@ public class DialogButtonListener implements ActionListener,
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		// FWDialog dialog = new FWDialog(accounts.get(index),
-		// factory.createTransaction());
-		dialog.setVisible(true);
-
+		System.out.println("OOOOOOOOOOOOOOOo");
+		if (index > -1)
+			dialog.setVisible(true);
+		else
+			JOptionPane.showMessageDialog(dialog, "Select One Customer!!");
 	}
 
 	public void valueChanged(ListSelectionEvent e) {
@@ -38,8 +41,8 @@ public class DialogButtonListener implements ActionListener,
 
 			// JTable table = (JTable) e.getSource();
 			index = table.getSelectedRow();
-			
-			if (index >= 0){
+
+			if (index >= 0) {
 				System.out.println(accounts.get(index));
 				dialog.setAccount(accounts.get(index));
 			}

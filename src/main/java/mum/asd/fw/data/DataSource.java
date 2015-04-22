@@ -1,17 +1,17 @@
 package mum.asd.fw.data;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import asd.bankapp.account.CheckingAccount;
 import mum.asd.fw.account.Account;
+import mum.asd.fw.account.IAccount;
+import mum.asd.fw.party.Address;
 import mum.asd.fw.party.Customer;
 import mum.asd.fw.party.Person;
-import mum.asd.fw.party.Address;
+import asd.bankapp.account.CheckingAccount;
 
 public class DataSource {
-	public static List<Account> accounts = new ArrayList<Account>();
+	public static List<IAccount> accounts = new ArrayList<IAccount>();
 	static {
 		Address add = new Address("1street", "fairfield", "IA", "555444");
 		Customer c = new Person("Nuhendra", add, "");
@@ -31,7 +31,7 @@ public class DataSource {
 		a.setAccnr(2);
 	}
 
-	public static List<Account> getAccounts() {
+	public static List<IAccount> getAccounts() {
 		return accounts;
 	}
 }

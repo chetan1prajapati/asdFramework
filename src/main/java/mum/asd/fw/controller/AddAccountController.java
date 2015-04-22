@@ -1,7 +1,6 @@
 package mum.asd.fw.controller;
 
-import mum.asd.fw.account.CompanyAccount;
-import mum.asd.fw.account.PersonalAccount;
+import mum.asd.fw.account.IAccount;
 import mum.asd.fw.service.AccountService;
 
 public class AddAccountController {
@@ -11,11 +10,11 @@ public class AddAccountController {
 		accountService = as;
 	}
 
-	public void addPersonalAccount(PersonalAccount account) {
+	public void addPersonalAccount(IAccount account) {
 		accountService.addPersonalAccount(account);
 	}
 
-	public void addCompanyAccount(CompanyAccount account) {
+	public void addCompanyAccount(IAccount account) {
 		accountService.addCompanyAccount(account);
 	}
 }

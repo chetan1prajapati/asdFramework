@@ -2,11 +2,9 @@ package asd.bankapp;
 
 import java.util.List;
 
-import asd.bankapp.dao.AccountDao;
-import mum.asd.fw.account.Account;
-import mum.asd.fw.account.CompanyAccount;
-import mum.asd.fw.account.PersonalAccount;
+import mum.asd.fw.account.IAccount;
 import mum.asd.fw.service.AccountService;
+import asd.bankapp.dao.AccountDao;
 
 public class BankAccountService implements AccountService {
 	AccountDao aDao;
@@ -16,21 +14,21 @@ public class BankAccountService implements AccountService {
 
 	}
 
-	public void addAccount(Account a) {
+	public void addAccount(IAccount a) {
 
 	}
 
-	public List<Account> getAll() {
+	public List<IAccount> getAll() {
 
 		return aDao.getAll();
 	}
 
-	public void addCompanyAccount(CompanyAccount acc) {
+	public void addCompanyAccount(IAccount acc) {
 		aDao.insert(acc);
 
 	}
 
-	public void addPersonalAccount(PersonalAccount acc) {
+	public void addPersonalAccount(IAccount acc) {
 		aDao.insert(acc);
 
 	}

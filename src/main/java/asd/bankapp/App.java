@@ -44,7 +44,7 @@ public class App {
 		TransactionService ts = new BankTransactionService(aDao, tDao);
 
 		List<Column> cols = getColumns();
-		FWTableModel tm = new FWTableModel(cols, as);
+		FWTableModel tm = new BankTableModel(cols, as);
 		app.setAccountService(as);
 		app.setTransactionService(ts);
 		tm.setAccountService(as);

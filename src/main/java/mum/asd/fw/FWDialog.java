@@ -6,14 +6,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import mum.asd.fw.account.Account;
+import mum.asd.fw.account.IAccount;
 import mum.asd.fw.controller.TransactionController;
 
 //inject through DI with actionListener
 public class FWDialog extends JDialog implements ActionListener {
-	Account account;
+	IAccount account;
 	JLabel amountLabel;
 	JLabel nameLabel;
 	JTextField nameField;
@@ -36,7 +37,7 @@ public class FWDialog extends JDialog implements ActionListener {
 
 		setModal(true);
 		getContentPane().setLayout(null);
-		setSize(268, 126);
+		setSize(268, 156);
 		setVisible(false);
 		this.setTitle(str);
 		getContentPane().add(nameLabel);
@@ -74,18 +75,23 @@ public class FWDialog extends JDialog implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		controller.operate(account,
-				Double.parseDouble(amountField.getText().trim()));
-		model.refreshData();
-		model.fireTableDataChanged();
+		try {
+			controller.operate(account,
+					Double.parseDouble(amountField.getText().trim()));
+			model.refreshData();
+			model.fireTableDataChanged();
+			dispose();
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(this, "Enter a valid Number!!");
+		}
 
 	}
 
-	public Account getAccount() {
+	public IAccount getAccount() {
 		return account;
 	}
 
-	public void setAccount(Account account) {
+	public void setAccount(IAccount account) {
 		this.account = account;
 		this.nameField.setText(account.getCustomer().getName());
 	}

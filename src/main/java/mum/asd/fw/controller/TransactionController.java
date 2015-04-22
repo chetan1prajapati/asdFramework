@@ -1,7 +1,7 @@
 package mum.asd.fw.controller;
 
-import mum.asd.fw.account.Account;
+import mum.asd.fw.account.IAccount;
 
 public interface TransactionController {
-	public void operate(Account a, double amount);
+	public void operate(IAccount a, double amount);
 }

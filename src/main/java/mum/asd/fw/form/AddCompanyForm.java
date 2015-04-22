@@ -2,17 +2,20 @@ package mum.asd.fw.form;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import mum.asd.fw.FWForm;
 import mum.asd.fw.FWTableModel;
-import mum.asd.fw.account.CompanyAccount;
-import mum.asd.fw.controller.AddAccountController;
+import mum.asd.fw.account.IAccount;
 import mum.asd.fw.gui.IForm;
 import mum.asd.fw.gui.SelectOneInput;
 import mum.asd.fw.party.Address;
 import mum.asd.fw.party.Company;
 import mum.asd.fw.service.AccountService;
+import asd.bankapp.account.CheckingAccount;
+import asd.bankapp.account.SavingAccount;
 
 public class AddCompanyForm extends FWForm {
 	// AddAccountController controller;
@@ -28,15 +31,20 @@ public class AddCompanyForm extends FWForm {
 		setModal(true);
 		this.model = model;
 		getContentPane().setLayout(null);
-		setSize(298, 339);
+		setSize(298, 345);
 		setVisible(false);
 		JRadioButton_Chk.setText("Checkings");
 		JRadioButton_Chk.setActionCommand("Checkings");
 		getContentPane().add(JRadioButton_Chk);
+		JRadioButton_Chk.setSelected(true);
 		JRadioButton_Chk.setBounds(36, 12, 84, 24);
 		JRadioButton_Sav.setText("Savings");
 		JRadioButton_Sav.setActionCommand("Savings");
 		getContentPane().add(JRadioButton_Sav);
+		JRadioButton_Sav.setSelected(false);
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(JRadioButton_Chk);
+		bg.add(JRadioButton_Sav);
 		JRadioButton_Sav.setBounds(36, 36, 84, 24);
 		JLabel1.setText("Name");
 		getContentPane().add(JLabel1);
@@ -88,16 +96,13 @@ public class AddCompanyForm extends FWForm {
 		JButton_Calcel.setActionCommand("Cancel");
 		getContentPane().add(JButton_Calcel);
 		JButton_Calcel.setBounds(156, 276, 84, 24);
-		JLabel8.setText("Acc Nr");
-		getContentPane().add(JLabel8);
-		JLabel8.setForeground(java.awt.Color.black);
-		JLabel8.setBounds(12, 72, 48, 24);
-		getContentPane().add(JTextField_ACNR);
-		JTextField_ACNR.setBounds(120, 72, 156, 20);
+
 		// }}
 
 		// {{REGISTER_LISTENERS
+
 		SymAction lSymAction = new SymAction();
+		
 		JButton_OK.addActionListener(lSymAction);
 		JButton_Calcel.addActionListener(lSymAction);
 
@@ -147,6 +152,8 @@ public class AddCompanyForm extends FWForm {
 
 	}
 
+	
+
 	class SymAction implements java.awt.event.ActionListener {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
 			Object object = event.getSource();
@@ -158,32 +165,27 @@ public class AddCompanyForm extends FWForm {
 	}
 
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event) {
-		CompanyAccount acc = new CompanyAccount();
-		Address add = new Address(JTextField_STR.getText(),
-				JTextField_CT.getText(), JTextField_ST.getText(),
-				JTextField_ZIP.getText());
-		int eCount = 0;
 		try {
-			eCount = Integer.parseInt(JTextField_NoOfEmp.getText());
+			IAccount acc = null;
+			Address add = new Address(JTextField_STR.getText(),
+					JTextField_CT.getText(), JTextField_ST.getText(),
+					JTextField_ZIP.getText());
+			int eCount = Integer.parseInt(JTextField_NoOfEmp.getText());
+			Company com = new Company(JTextField_NAME.getText(), add, eCount);
+			if (JRadioButton_Chk.isSelected())
+				acc = new CheckingAccount(com);
+			else
+				acc = new SavingAccount(com);
+
+			controller.addCompanyAccount(acc);
+			model.refreshData();
+			model.fireTableDataChanged();
+
+			dispose();
 		} catch (Exception e) {
+			JOptionPane
+					.showMessageDialog(this, "Invalid number (number of emp");
 		}
-		Company com = new Company(JTextField_ACNR.getText(), add, eCount);
-		acc.setCustomer(com);
-		controller.addCompanyAccount(acc);
-		model.refreshData();
-		model.fireTableDataChanged();
-		// parentframe.accountnr=JTextField_ACNR.getText();
-		// parentframe.clientName=JTextField_NAME.getText();
-		// parentframe.street=JTextField_STR.getText();
-		// parentframe.city=JTextField_CT.getText();
-		// parentframe.zip=JTextField_ZIP.getText();
-		// parentframe.state=JTextField_ST.getText();
-		// if (JRadioButton_Chk.isSelected())
-		// parentframe.accountType="Ch";
-		// else
-		// parentframe.accountType="S";
-		// parentframe.newaccount=true;
-		dispose();
 
 	}
 

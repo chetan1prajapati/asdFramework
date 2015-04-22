@@ -3,6 +3,7 @@ package asd.bankapp.dao;
 import java.util.List;
 
 import mum.asd.fw.account.Account;
+import mum.asd.fw.account.IAccount;
 import mum.asd.fw.common.Functor;
 import mum.asd.fw.common.Predicate;
 import mum.asd.fw.dao.IAccountDao;
@@ -10,13 +11,13 @@ import mum.asd.fw.data.DataSource;
 
 public class AccountDao implements IAccountDao {
 
-	public void insert(Account t) {
+	public void insert(IAccount t) {
 		DataSource.getAccounts().add(t);
 		System.out.println(DataSource.accounts.size());
 	}
 
-	public void update(Account t) {
-		for (Account a : DataSource.getAccounts()) {
+	public void update(IAccount t) {
+		for (IAccount a : DataSource.getAccounts()) {
 			System.out.println(a.getBalance());
 			a.getBalance();
 		}
@@ -35,14 +36,14 @@ public class AccountDao implements IAccountDao {
 		return null;
 	}
 
-	public List<Account> getAll() {
+	public List<IAccount> getAll() {
 
 		return DataSource.getAccounts();
 	}
 
-	public <R> void doAll(Functor<Account, R> func, Predicate<Account> p) {
-		List<Account> all = getAll();
-		for (Account account : all) {
+	public <R> void doAll(Functor<IAccount, R> func, Predicate<IAccount> p) {
+		List<IAccount> all = getAll();
+		for (IAccount account : all) {
 			func.execute(account);
 		}
 

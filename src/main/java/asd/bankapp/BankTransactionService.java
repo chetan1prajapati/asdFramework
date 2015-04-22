@@ -1,10 +1,10 @@
 package asd.bankapp;
 
 import java.util.Date;
-import java.util.List;
 
-import mum.asd.fw.account.Account;
 import mum.asd.fw.account.Deposit;
+import mum.asd.fw.account.IAccount;
+import mum.asd.fw.account.IEntry;
 import mum.asd.fw.account.Withdraw;
 import mum.asd.fw.common.AddInterestFunctor;
 import mum.asd.fw.common.Predicate;
@@ -21,30 +21,31 @@ public class BankTransactionService implements TransactionService {
 		this.tDao = tDao;
 	}
 
-	public void deposit(Account a, double amount) {
-		tDao.insert(new Deposit(a, new Date(), amount));
-		a.setBalance(a.getBalance() + amount);
+	public void deposit(IAccount a, double amount) {
+		IEntry e = new Deposit(a, new Date(), amount);
+		tDao.insert(e);
+		a.addEntry(e);
 		aDao.update(a);
 
 	}
 
-	public void withdraw(Account a, double amount) {
-		tDao.insert(new Withdraw(a, new Date(), amount));
-		a.setBalance(a.getBalance() - amount);
+	public void withdraw(IAccount a, double amount) {
+		IEntry e = new Withdraw(a, new Date(), amount);
+		tDao.insert(e);
+		a.addEntry(e);
 		aDao.update(a);
 
 	}
 
-	public void charge(Account a, double amount) {
+	public void charge(IAccount a, double amount) {
 		// TODO Auto-generated method stub
 
 	}
 
 	public void addInterest() {
-		List<Account> accounts = aDao.getAll();
 		AddInterestFunctor f = new AddInterestFunctor(aDao, tDao);
-		Predicate<Account> p = new Predicate<Account>() {
-			public boolean test(Account t) {
+		Predicate<IAccount> p = new Predicate<IAccount>() {
+			public boolean test(IAccount t) {
 				return true;
 			}
 		};

@@ -16,6 +16,7 @@ import mum.asd.fw.form.PersonalAccountForm;
 import mum.asd.fw.gui.DialogButton;
 import mum.asd.fw.gui.FormButton;
 import mum.asd.fw.gui.IForm;
+import mum.asd.fw.gui.ReportButton;
 import mum.asd.fw.service.AccountService;
 import mum.asd.fw.service.TransactionService;
 
@@ -26,6 +27,8 @@ public class FWApplication {
 	List<DialogButton> dialogButts;
 	AccountService accountService;
 	TransactionService transactionService;
+
+	List<ReportButton> reportButts;
 
 	FWDialog depositDialog;// = new FWDialog("Deposit",);
 	FWDialog withdrawDialog;// = new FWDialog("Withdraw");
@@ -40,6 +43,7 @@ public class FWApplication {
 	public FWApplication() {
 		formButts = new ArrayList<FormButton>();
 		dialogButts = new ArrayList<DialogButton>();
+		reportButts = new ArrayList<ReportButton>();
 
 		// transactionService = new BankTransactionService();
 
@@ -132,5 +136,15 @@ public class FWApplication {
 		this.transactionService = ts;
 
 	}
+
+	public List<ReportButton> getReportButts() {
+		return reportButts;
+	}
+
+	public void setReportButts(List<ReportButton> reportButts) {
+		this.reportButts = reportButts;
+	}
+	
+	
 
 }

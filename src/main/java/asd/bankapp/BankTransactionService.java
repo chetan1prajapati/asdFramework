@@ -34,7 +34,6 @@ public class BankTransactionService implements TransactionService {
 		tDao.insert(e);
 		a.addEntry(e);
 		aDao.update(a);
-
 	}
 
 	public void charge(IAccount a, double amount) {

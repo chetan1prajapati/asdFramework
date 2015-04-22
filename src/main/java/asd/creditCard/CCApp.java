@@ -5,6 +5,7 @@ import java.util.List;
 
 import mum.asd.fw.FWApplication;
 import mum.asd.fw.FWTableModel;
+import mum.asd.fw.account.ReportType;
 import mum.asd.fw.account.TransactionType;
 import mum.asd.fw.form.AccountForm;
 import mum.asd.fw.gui.Column;
@@ -35,7 +36,8 @@ public class CCApp {
 		app.setFormButts(formButts);
 
 		List<ReportButton> reportButts = new ArrayList<ReportButton>();
-		reportButts.add(new ReportButton("Get Monthly Report"));
+		reportButts.add(new ReportButton("Get Monthly Report",
+				ReportType.MONTHLY_REPORT));
 		app.setReportButts(reportButts);
 		AccountDao aDao = new AccountDao();
 		TransactionDao tDao = new TransactionDao();

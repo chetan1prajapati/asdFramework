@@ -3,8 +3,10 @@ package mum.asd.fw;
 import java.util.ArrayList;
 import java.util.List;
 
+import mum.asd.fw.account.ReportType;
 import mum.asd.fw.account.TransactionType;
 import mum.asd.fw.controller.AddAccountController;
+import mum.asd.fw.controller.AddInterestController;
 import mum.asd.fw.controller.DepositController;
 import mum.asd.fw.controller.TransactionController;
 import mum.asd.fw.controller.WithdrawController;
@@ -13,6 +15,7 @@ import mum.asd.fw.form.AddCompanyForm;
 import mum.asd.fw.form.AddPersonalForm;
 import mum.asd.fw.form.CompanyAccountForm;
 import mum.asd.fw.form.PersonalAccountForm;
+import mum.asd.fw.gui.ComputeButton;
 import mum.asd.fw.gui.DialogButton;
 import mum.asd.fw.gui.FormButton;
 import mum.asd.fw.gui.IForm;
@@ -29,6 +32,7 @@ public class FWApplication {
 	TransactionService transactionService;
 
 	List<ReportButton> reportButts;
+	List<ComputeButton> computeButts;
 
 	FWDialog depositDialog;// = new FWDialog("Deposit",);
 	FWDialog withdrawDialog;// = new FWDialog("Withdraw");
@@ -37,14 +41,18 @@ public class FWApplication {
 	TransactionController withdrawController;
 	AddAccountController addAccountController;
 
+	AddInterestController addInterestController;
+
 	FWForm personalAccForm;// = new FWForm("AddPersonalAccount");
 	FWForm companyAccForm;// = new FWForm("AddCompanyAccount");
+
+	FWReport monthlyReport;
 
 	public FWApplication() {
 		formButts = new ArrayList<FormButton>();
 		dialogButts = new ArrayList<DialogButton>();
 		reportButts = new ArrayList<ReportButton>();
-
+		computeButts = new ArrayList<ComputeButton>();
 		// transactionService = new BankTransactionService();
 
 	}
@@ -53,6 +61,8 @@ public class FWApplication {
 		depositController = new DepositController(transactionService);
 		withdrawController = new WithdrawController(transactionService);
 		addAccountController = new AddAccountController(accountService);
+		addInterestController = new AddInterestController(transactionService,
+				tableModel);
 		depositDialog = new FWDialog("Deposit", tableModel);
 		depositDialog.setController(depositController);
 		withdrawDialog = new FWDialog("Withdraw", tableModel);
@@ -66,6 +76,9 @@ public class FWApplication {
 		companyAccForm = new AddCompanyForm("AddCompanyAccount", cform,
 				tableModel);
 		companyAccForm.setController(addAccountController);
+
+		monthlyReport = new FWReport();
+
 	}
 
 	public List<FormButton> getFormButts() {
@@ -128,6 +141,14 @@ public class FWApplication {
 		return null;
 	}
 
+	public FWReport getReport(ReportType reportType) {
+		switch (reportType) {
+		case MONTHLY_REPORT:
+			return monthlyReport;
+		}
+		return null;
+	}
+
 	public void setAccountService(AccountService accountService) {
 		this.accountService = accountService;
 	}
@@ -144,7 +165,18 @@ public class FWApplication {
 	public void setReportButts(List<ReportButton> reportButts) {
 		this.reportButts = reportButts;
 	}
-	
-	
+
+	public void setComputeButtons(List<ComputeButton> computeButtons) {
+		this.computeButts = computeButtons;
+
+	}
+
+	public List<ComputeButton> getComputeButts() {
+		return computeButts;
+	}
+
+	public AddInterestController getAddInterestController() {
+		return addInterestController;
+	}
 
 }

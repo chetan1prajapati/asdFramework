@@ -13,16 +13,22 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import mum.asd.fw.gui.ComputeButton;
+import mum.asd.fw.gui.ComputeButtonListener;
 import mum.asd.fw.gui.DialogButton;
 import mum.asd.fw.gui.DialogButtonListener;
 import mum.asd.fw.gui.FormButton;
 import mum.asd.fw.gui.FormButtonListener;
+import mum.asd.fw.gui.ReportButton;
+import mum.asd.fw.gui.ReportButtonListener;
 
 public class ApplicationBuilder {
 	public static void build(FWApplication app) {
 		JFrame frame = new JFrame(app.getTitle());
 		List<DialogButton> dButts = app.getDialogButts();
 		List<FormButton> fButts = app.getFormButts();
+		List<ReportButton> rButts = app.getReportButts();
+		List<ComputeButton> cButts = app.getComputeButts();
 
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,6 +40,18 @@ public class ApplicationBuilder {
 					.getFormType())));
 			panel1.add(b);
 		}
+		for (ComputeButton rb : cButts) {
+			JButton b = new JButton(rb.getLabel());
+			b.addActionListener(new ComputeButtonListener(app
+					.getAddInterestController()));
+			panel1.add(b);
+		}
+
+		for (ReportButton rb : rButts) {
+			JButton b = new JButton(rb.getLabel());
+			b.addActionListener(new ReportButtonListener(app.getReport(rb
+					.getReportType())));
+		}
 
 		FWTableModel model = app.getTableModel();
 
@@ -44,8 +62,8 @@ public class ApplicationBuilder {
 		for (DialogButton db : dButts) {
 			JButton b = new JButton(db.getLabel());
 			DialogButtonListener listener = new DialogButtonListener(
-					model.getAccountList(), app.getDialog(db.getTransactionType()),
-					table);
+					model.getAccountList(), app.getDialog(db
+							.getTransactionType()), table);
 			b.addActionListener(listener);
 			table.getSelectionModel().addListSelectionListener(listener);
 			panel2.add(b);

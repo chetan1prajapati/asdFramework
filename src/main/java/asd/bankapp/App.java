@@ -7,11 +7,15 @@ import asd.bankapp.dao.AccountDao;
 import asd.bankapp.dao.TransactionDao;
 import mum.asd.fw.FWApplication;
 import mum.asd.fw.FWTableModel;
+import mum.asd.fw.account.Computation;
+import mum.asd.fw.account.ReportType;
 import mum.asd.fw.account.TransactionType;
 import mum.asd.fw.form.AccountForm;
 import mum.asd.fw.gui.Column;
+import mum.asd.fw.gui.ComputeButton;
 import mum.asd.fw.gui.DialogButton;
 import mum.asd.fw.gui.FormButton;
+import mum.asd.fw.gui.ReportButton;
 import mum.asd.fw.service.AccountService;
 import mum.asd.fw.service.TransactionService;
 
@@ -37,6 +41,15 @@ public class App {
 		formButts.add(addPersonal);
 		formButts.add(addCompany);
 		app.setFormButts(formButts);
+
+		// ReportButton rb = new ReportButton("Add Interest",
+		// ReportType.MONTHLY_REPORT);
+
+		List<ComputeButton> computeButtons = new ArrayList<ComputeButton>();
+		ComputeButton cb = new ComputeButton("Add Interest",
+				Computation.ADD_INTEREST);
+		computeButtons.add(cb);
+		app.setComputeButtons(computeButtons);
 		AccountDao aDao = new AccountDao();
 		TransactionDao tDao = new TransactionDao();
 

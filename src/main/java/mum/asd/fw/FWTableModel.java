@@ -61,12 +61,8 @@ public abstract class FWTableModel extends AbstractTableModel {
 	public void refreshData() {
 
 		accountList = accountService.getAll();
-		for (IAccount account : accountList) {
-			System.out.println(account.getBalance());
-		}
+		fireTableDataChanged();
 
 	}
 
 }
-
-

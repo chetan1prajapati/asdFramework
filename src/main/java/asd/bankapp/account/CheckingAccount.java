@@ -32,7 +32,6 @@ public class CheckingAccount extends Account {
 	// balance -= e.getAmount();
 	// }
 
-	@Override
 	public boolean checkEmailCondition() {
 		// TODO Auto-generated method stub
 		return false;

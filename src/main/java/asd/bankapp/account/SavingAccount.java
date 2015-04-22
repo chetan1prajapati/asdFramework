@@ -8,7 +8,7 @@ import mum.asd.fw.account.Withdraw;
 import mum.asd.fw.party.Customer;
 
 public class SavingAccount extends Account {
-	double interestRate = 0.0325;
+	double interestRate = 0.01;
 	boolean emailflag;
 
 	public SavingAccount(Customer cust) {
@@ -24,7 +24,6 @@ public class SavingAccount extends Account {
 		return interestRate;
 	}
 
-	@Override
 	public boolean checkEmailCondition() {
 		// TODO Auto-generated method stub
 		return false;

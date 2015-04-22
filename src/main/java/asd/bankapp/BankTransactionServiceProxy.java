@@ -13,19 +13,16 @@ public class BankTransactionServiceProxy implements TransactionService{
 		this.func    = func;
 	}
 
-	@Override
 	public void addInterest() {
 		service.addInterest();
 	}
 
-	@Override
 	public void deposit(IAccount a, double amount) {
 		func.preMessage("Deposit");
 		service.deposit(a, amount);
 		func.postMessage(a, amount);
 	}
 
-	@Override
 	public void withdraw(IAccount a, double amount) {
 		func.preMessage("Withdraw");
 		service.withdraw(a, amount);
@@ -33,7 +30,6 @@ public class BankTransactionServiceProxy implements TransactionService{
 		
 	}
 
-	@Override
 	public void charge(IAccount a, double amount) {
 		service.charge(a, amount);
 	}

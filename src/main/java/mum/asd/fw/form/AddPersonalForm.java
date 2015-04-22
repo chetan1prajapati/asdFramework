@@ -149,8 +149,6 @@ public class AddPersonalForm extends FWForm {
 
 	}
 
-	
-
 	class SymAction implements java.awt.event.ActionListener {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
 			Object object = event.getSource();

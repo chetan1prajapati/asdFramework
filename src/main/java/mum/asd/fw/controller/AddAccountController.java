@@ -1,5 +1,7 @@
 package mum.asd.fw.controller;
 
+import java.sql.SQLException;
+
 import mum.asd.fw.account.IAccount;
 import mum.asd.fw.service.AccountService;
 
@@ -10,11 +12,11 @@ public class AddAccountController {
 		accountService = as;
 	}
 
-	public void addPersonalAccount(IAccount account) {
+	public void addPersonalAccount(IAccount account) throws SQLException {
 		accountService.addPersonalAccount(account);
 	}
 
-	public void addCompanyAccount(IAccount account) {
+	public void addCompanyAccount(IAccount account) throws SQLException {
 		accountService.addCompanyAccount(account);
 	}
 }

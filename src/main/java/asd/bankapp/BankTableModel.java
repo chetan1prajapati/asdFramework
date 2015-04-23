@@ -1,6 +1,8 @@
 package asd.bankapp;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import mum.asd.fw.FWTableModel;
 import mum.asd.fw.account.Account;
@@ -9,9 +11,17 @@ import mum.asd.fw.gui.Column;
 import mum.asd.fw.service.AccountService;
 
 public class BankTableModel extends FWTableModel {
+	Logger logger = Logger.getLogger(BankTableModel.class.getName());
 
-	public BankTableModel(List<Column> col, AccountService as) {
-		super(col, as);
+	public BankTableModel(AccountService as) {
+		super(new ArrayList<Column>(), as);
+
+		cols.add(new Column("Accnr", false));
+		cols.add(new Column("Name", false));
+		cols.add(new Column("city", false));
+		cols.add(new Column("P/C", false));
+		cols.add(new Column("Ch/S", false));
+		cols.add(new Column("balance", false));
 	}
 
 	public void addColumn(Column col) {
@@ -64,10 +74,14 @@ public class BankTableModel extends FWTableModel {
 	}
 
 	public void refreshData() {
-
-		accountList = accountService.getAll();
-		for (IAccount account : accountList) {
-			System.out.println(account.getBalance());
+		try {
+			accountList.clear();
+			accountList.addAll(accountService.getAll());
+			for (IAccount account : accountList) {
+				System.out.println(account.getBalance());
+			}
+		} catch (Exception e) {
+ 			logger.info("Sql exception on getting all account");
 		}
 
 	}

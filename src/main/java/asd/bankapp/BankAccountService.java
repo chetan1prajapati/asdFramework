@@ -1,16 +1,17 @@
 package asd.bankapp;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import mum.asd.fw.account.IAccount;
+import mum.asd.fw.dao.IAccountDao;
 import mum.asd.fw.service.AccountService;
 import asd.bankapp.dao.AccountDao;
 
 public class BankAccountService implements AccountService {
-	AccountDao aDao;
+	IAccountDao accountDao;
 
-	public BankAccountService(AccountDao dao) {
-		aDao = dao;
+	public BankAccountService() {
 
 	}
 
@@ -18,18 +19,28 @@ public class BankAccountService implements AccountService {
 
 	}
 
-	public List<IAccount> getAll() {
+	public List<IAccount> getAll() throws SQLException{
 
-		return aDao.getAll();
+		return accountDao.getAll();
 	}
 
-	public void addCompanyAccount(IAccount acc) {
-		aDao.insert(acc);
+	public void addCompanyAccount(IAccount acc) throws SQLException{
+		accountDao.insert(acc);
 
 	}
 
-	public void addPersonalAccount(IAccount acc) {
-		aDao.insert(acc);
+	public void addPersonalAccount(IAccount acc) throws SQLException{
+		accountDao.insert(acc);
+
+	}
+
+	public void setAccountDao(IAccountDao accountDao) {
+		this.accountDao = accountDao;
+
+	}
+
+	public IAccountDao getAccountDao() {
+		return accountDao;
 
 	}
 

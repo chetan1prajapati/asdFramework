@@ -3,6 +3,8 @@ package mum.asd.fw;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.Box;
@@ -13,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import mum.asd.fw.dao.IAccountDao;
+import mum.asd.fw.dao.ITransactionDao;
 import mum.asd.fw.gui.ComputeButton;
 import mum.asd.fw.gui.ComputeButtonListener;
 import mum.asd.fw.gui.DialogButton;
@@ -34,6 +38,7 @@ public class ApplicationBuilder {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(575, 310);
 		JPanel panel1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
 		for (FormButton fb : fButts) {
 			JButton b = new JButton(fb.getLabel());
 			b.addActionListener(new FormButtonListener(app.getForm(fb
@@ -61,6 +66,7 @@ public class ApplicationBuilder {
 		panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 		for (DialogButton db : dButts) {
 			JButton b = new JButton(db.getLabel());
+			model.refreshData();
 			DialogButtonListener listener = new DialogButtonListener(
 					model.getAccountList(), app.getDialog(db
 							.getTransactionType()), table);
@@ -71,11 +77,19 @@ public class ApplicationBuilder {
 		}
 
 		JButton exit = new JButton("Exit");
+		exit.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+
+			}
+		});
 		panel2.add(exit);
 		Container c = frame.getContentPane();
 		c.add(BorderLayout.CENTER, new JScrollPane(table));
 		c.add(BorderLayout.NORTH, panel1);
 		c.add(BorderLayout.EAST, panel2);
+
 		frame.setVisible(true);
 
 	}

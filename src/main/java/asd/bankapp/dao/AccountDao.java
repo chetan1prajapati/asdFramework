@@ -7,22 +7,23 @@ import mum.asd.fw.account.IAccount;
 import mum.asd.fw.common.Functor;
 import mum.asd.fw.common.Predicate;
 import mum.asd.fw.dao.IAccountDao;
-import mum.asd.fw.data.DataSource;
 
 public class AccountDao implements IAccountDao {
 
+	
+
 	public void insert(IAccount t) {
-		DataSource.getAccounts().add(t);
-		System.out.println(DataSource.accounts.size());
+//		mum.asd.fw.data.DataSource.getAccounts().add(t);
+//		System.out.println(mum.asd.fw.data.DataSource.accounts.size());
 	}
 
 	public void update(IAccount t) {
-		for (IAccount a : DataSource.getAccounts()) {
-			System.out.println(a.getBalance());
-			a.getBalance();
-		}
-		System.out.println(t.getBalance());
-		System.out.println("update");
+//		for (IAccount a : mum.asd.fw.data.DataSource.getAccounts()) {
+//			System.out.println(a.getBalance());
+//			a.getBalance();
+//		}
+//		System.out.println(t.getBalance());
+//		System.out.println("update");
 
 	}
 
@@ -38,14 +39,14 @@ public class AccountDao implements IAccountDao {
 
 	public List<IAccount> getAll() {
 
-		return DataSource.getAccounts();
+		return null;//mum.asd.fw.data.DataSource.getAccounts();
 	}
 
 	public <R> void doAll(Functor<IAccount, R> func, Predicate<IAccount> p) {
-		List<IAccount> all = getAll();
-		for (IAccount account : all) {
-			func.execute(account);
-		}
+//		List<IAccount> all = getAll();
+//		for (IAccount account : all) {
+//			func.execute(account);
+//		}
 
 	}
 

@@ -42,9 +42,12 @@ public class CCApp {
 		AccountDao aDao = new AccountDao();
 		TransactionDao tDao = new TransactionDao();
 
-		AccountService as = new BankAccountService(aDao);
-		TransactionService ts = new BankTransactionService(aDao, tDao);
-
+		AccountService as = new BankAccountService();
+		as.setAccountDao(aDao);
+		TransactionService ts = new BankTransactionService();
+		ts.setAccountDao(aDao);
+		ts.setTransactionDao(tDao);
+		
 		List<Column> cols = getColumns();
 		FWTableModel tm = new CCTableModel(cols, as);
 		app.setAccountService(as);

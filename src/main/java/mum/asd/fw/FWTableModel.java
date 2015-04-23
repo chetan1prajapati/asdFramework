@@ -1,5 +1,7 @@
 package mum.asd.fw;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -17,7 +19,7 @@ public abstract class FWTableModel extends AbstractTableModel {
 	public FWTableModel(List<Column> col, AccountService as) {
 		cols = col;
 		this.accountService = as;
-		accountList = accountService.getAll();
+		accountList = new ArrayList<IAccount>();
 	}
 
 	public void addColumn(Column col) {
@@ -60,7 +62,12 @@ public abstract class FWTableModel extends AbstractTableModel {
 
 	public void refreshData() {
 
-		accountList = accountService.getAll();
+		try {
+			accountList = accountService.getAll();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		fireTableDataChanged();
 
 	}

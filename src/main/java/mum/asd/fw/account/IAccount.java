@@ -13,5 +13,11 @@ public interface IAccount {
 
 	void sendEmail();
 
+	AccountType getAccountType();
+
+	void setAccnr(Integer accnr);
+
 	Customer getCustomer();
+
+	Integer getAccnr();
 }

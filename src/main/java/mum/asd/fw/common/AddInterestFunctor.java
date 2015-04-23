@@ -1,5 +1,6 @@
 package mum.asd.fw.common;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 import mum.asd.fw.account.Account;
@@ -18,9 +19,10 @@ public class AddInterestFunctor implements Functor<IAccount, Double> {
 		this.tDao = tDao;
 	}
 
-	public void execute(IAccount t) {
+	public void execute(IAccount t) throws SQLException {
 		double interest = ((Account) t).getInterestRate() * t.getBalance();
-		IEntry entry = new Deposit(t, new Date(), interest);
+		IEntry entry = new Deposit(t, new Date().toString(), interest);
+
 		t.addEntry(entry);
 		tDao.insert(entry);
 		aDao.update(t);

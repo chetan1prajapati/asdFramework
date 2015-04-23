@@ -13,4 +13,12 @@ public class Company extends Customer implements IOrganization {
 		return "C";
 	}
 
+	public Integer getNrOfEmps() {
+		return nrOfEmps;
+	}
+
+	public void setNrOfEmps(Integer nrOfEmps) {
+		this.nrOfEmps = nrOfEmps;
+	}
+
 }

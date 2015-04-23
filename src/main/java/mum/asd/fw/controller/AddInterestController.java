@@ -1,5 +1,7 @@
 package mum.asd.fw.controller;
 
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 import mum.asd.fw.FWTableModel;
@@ -14,7 +16,7 @@ public class AddInterestController {
 		this.model = model;
 	}
 
-	public void operate() {
+	public void operate() throws SQLException {
 		transService.addInterest();
 
 		model.refreshData();

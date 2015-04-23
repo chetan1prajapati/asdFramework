@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import mum.asd.fw.account.IAccount;
 import mum.asd.fw.controller.TransactionController;
+import mum.asd.fw.controller.WithdrawController;
 
 //inject through DI with actionListener
 public class FWDialog extends JDialog implements ActionListener {
@@ -76,11 +77,23 @@ public class FWDialog extends JDialog implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		try {
-			controller.operate(account,
-					Double.parseDouble(amountField.getText().trim()));
+			double amount = Double.parseDouble(amountField.getText().trim());
+			controller.operate(account, amount);
 			model.refreshData();
 			model.fireTableDataChanged();
+			
+
 			dispose();
+			if (account.getCustomer().getType().equals("C"))
+				JOptionPane.showMessageDialog(this,
+						"transaction on company account!!");
+			if (controller instanceof WithdrawController)
+				if (account.getBalance() < 0)
+					JOptionPane.showMessageDialog(this,
+							"Negative Balance remaining!!");
+				else if (amount > 500)
+					JOptionPane
+							.showMessageDialog(this, "amount exceeded 500!!");
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(this, "Enter a valid Number!!");
 		}

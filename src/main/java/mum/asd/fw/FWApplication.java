@@ -10,6 +10,9 @@ import mum.asd.fw.controller.AddInterestController;
 import mum.asd.fw.controller.DepositController;
 import mum.asd.fw.controller.TransactionController;
 import mum.asd.fw.controller.WithdrawController;
+import mum.asd.fw.dao.AbstractDaoFactory;
+import mum.asd.fw.dao.IAccountDao;
+import mum.asd.fw.dao.ITransactionDao;
 import mum.asd.fw.form.AccountForm;
 import mum.asd.fw.form.AddCompanyForm;
 import mum.asd.fw.form.AddPersonalForm;
@@ -28,6 +31,12 @@ public class FWApplication {
 	List<FormButton> formButts;
 	FWTableModel tableModel;
 	List<DialogButton> dialogButts;
+	AbstractDaoFactory daoFactory;
+
+	public void setComputeButts(List<ComputeButton> computeButts) {
+		this.computeButts = computeButts;
+	}
+
 	AccountService accountService;
 	TransactionService transactionService;
 
@@ -58,26 +67,12 @@ public class FWApplication {
 	}
 
 	public void init() {
-		depositController = new DepositController(transactionService);
-		withdrawController = new WithdrawController(transactionService);
-		addAccountController = new AddAccountController(accountService);
-		addInterestController = new AddInterestController(transactionService,
-				tableModel);
-		depositDialog = new FWDialog("Deposit", tableModel);
-		depositDialog.setController(depositController);
-		withdrawDialog = new FWDialog("Withdraw", tableModel);
-		withdrawDialog.setController(withdrawController);
-		IForm pform = new PersonalAccountForm();
-		IForm cform = new CompanyAccountForm();
-
-		personalAccForm = new AddPersonalForm("AddPersonalAccount", pform,
-				tableModel);
-		personalAccForm.setController(addAccountController);
-		companyAccForm = new AddCompanyForm("AddCompanyAccount", cform,
-				tableModel);
-		companyAccForm.setController(addAccountController);
-
-		monthlyReport = new FWReport();
+		IAccountDao accountDao = getDaoFactory().getAccountDao();
+		ITransactionDao transactionDao = getDaoFactory().getTransactionDao();
+		getAccountService().setAccountDao(accountDao);
+		getTransactionService().setAccountDao(accountDao);
+		getTransactionService().setTransactionDao(transactionDao);
+		ApplicationBuilder.build(this);
 
 	}
 
@@ -177,6 +172,67 @@ public class FWApplication {
 
 	public AddInterestController getAddInterestController() {
 		return addInterestController;
+	}
+
+	public FWForm getPersonalAccForm() {
+		return personalAccForm;
+	}
+
+	public void setPersonalAccForm(FWForm personalAccForm) {
+		this.personalAccForm = personalAccForm;
+	}
+
+	public FWForm getCompanyAccForm() {
+		return companyAccForm;
+	}
+
+	public void setCompanyAccForm(FWForm companyAccForm) {
+		this.companyAccForm = companyAccForm;
+	}
+
+	public void setAddInterestController(
+			AddInterestController addInterestController) {
+		this.addInterestController = addInterestController;
+	}
+
+	public FWDialog getDepositDialog() {
+		return depositDialog;
+	}
+
+	public void setDepositDialog(FWDialog depositDialog) {
+		this.depositDialog = depositDialog;
+	}
+
+	public FWDialog getWithdrawDialog() {
+		return withdrawDialog;
+	}
+
+	public void setWithdrawDialog(FWDialog withdrawDialog) {
+		this.withdrawDialog = withdrawDialog;
+	}
+
+	public FWDialog getChargeDialog() {
+		return chargeDialog;
+	}
+
+	public void setChargeDialog(FWDialog chargeDialog) {
+		this.chargeDialog = chargeDialog;
+	}
+
+	public void setDaoFactory(AbstractDaoFactory daoFactory) {
+		this.daoFactory = daoFactory;
+	}
+
+	public AbstractDaoFactory getDaoFactory() {
+		return daoFactory;
+	}
+
+	public TransactionService getTransactionService() {
+		return transactionService;
+	}
+
+	public AccountService getAccountService() {
+		return accountService;
 	}
 
 }

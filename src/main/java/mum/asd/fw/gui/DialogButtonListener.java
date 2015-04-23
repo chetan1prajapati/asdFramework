@@ -10,7 +10,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import mum.asd.fw.FWDialog;
-import mum.asd.fw.account.Account;
 import mum.asd.fw.account.IAccount;
 
 public class DialogButtonListener implements ActionListener,
@@ -28,7 +27,7 @@ public class DialogButtonListener implements ActionListener,
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("OOOOOOOOOOOOOOOo");
+		//System.out.println("OOOOOOOOOOOOOOOo");
 		if (index > -1)
 			dialog.setVisible(true);
 		else
@@ -43,7 +42,7 @@ public class DialogButtonListener implements ActionListener,
 			index = table.getSelectedRow();
 
 			if (index >= 0) {
-				System.out.println(accounts.get(index));
+				//System.out.println(accounts.get(index));
 				dialog.setAccount(accounts.get(index));
 			}
 

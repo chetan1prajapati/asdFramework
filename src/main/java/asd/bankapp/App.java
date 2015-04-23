@@ -21,7 +21,7 @@ import asd.bankapp.dao.AccountDao;
 import asd.bankapp.dao.TransactionDao;
 
 /**
- * Hello world!
+ *
  *
  */
 public class App {
@@ -43,9 +43,6 @@ public class App {
 		formButts.add(addCompany);
 		app.setFormButts(formButts);
 
-		// ReportButton rb = new ReportButton("Add Interest",
-		// ReportType.MONTHLY_REPORT);
-
 		List<ComputeButton> computeButtons = new ArrayList<ComputeButton>();
 		ComputeButton cb = new ComputeButton("Add Interest",
 				Computation.ADD_INTEREST);
@@ -54,20 +51,22 @@ public class App {
 		AccountDao aDao = new AccountDao();
 		TransactionDao tDao = new TransactionDao();
 
-		AccountService as = new BankAccountService(aDao);
-		TransactionService ts = new BankTransactionService(aDao, tDao);
+		AccountService as = new BankAccountService();
+		as.setAccountDao(aDao);
+		TransactionService ts = new BankTransactionService();
+		ts.setAccountDao(aDao);
+		ts.setTransactionDao(tDao);
 
 		LogFunctor<String, IAccount, Double> func = new TransactionLogFunctor();
-		TransactionService tsproxy = new BankTransactionServiceProxy(ts,func);
-		
+		TransactionService tsproxy = new BankTransactionServiceProxy(ts, func);
+
 		List<Column> cols = getColumns();
-		FWTableModel tm = new BankTableModel(cols, as);
+		FWTableModel tm = new BankTableModel(as);
 		app.setAccountService(as);
 		app.setTransactionService(tsproxy);
 		tm.setAccountService(as);
 		app.setTableModel(tm);
 		app.init();
-		app.start();
 	}
 
 	private static List<Column> getColumns() {

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import mum.asd.fw.FWForm;
 import mum.asd.fw.FWTableModel;
@@ -160,24 +161,28 @@ public class AddPersonalForm extends FWForm {
 	}
 
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event) {
+		try {
+			IAccount acc = null;
+			Integer zip = Integer.parseInt(JTextField_ZIP.getText());
+			Address add = new Address(JTextField_STR.getText(),
+					JTextField_CT.getText(), JTextField_ST.getText(), zip);
 
-		IAccount acc = null;
-		Address add = new Address(JTextField_STR.getText(),
-				JTextField_CT.getText(), JTextField_ST.getText(),
-				JTextField_ZIP.getText());
+			Person p = new Person(JTextField_NAME.getText(), add,
+					JTextField_BD.getText());
+			if (JRadioButton_Chk.isSelected())
+				acc = new CheckingAccount(p);
+			else
+				acc = new SavingAccount(p);
 
-		Person p = new Person(JTextField_NAME.getText(), add,
-				JTextField_BD.getText());
-		if (JRadioButton_Chk.isSelected())
-			acc = new CheckingAccount(p);
-		else
-			acc = new SavingAccount(p);
+			controller.addPersonalAccount(acc);
+			model.refreshData();
+			model.fireTableDataChanged();
 
-		controller.addPersonalAccount(acc);
-		model.refreshData();
-		model.fireTableDataChanged();
-
-		dispose();
+			dispose();
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Invalid number of zip");
+		}
 
 	}
 

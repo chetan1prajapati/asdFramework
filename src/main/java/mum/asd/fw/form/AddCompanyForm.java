@@ -102,7 +102,7 @@ public class AddCompanyForm extends FWForm {
 		// {{REGISTER_LISTENERS
 
 		SymAction lSymAction = new SymAction();
-		
+
 		JButton_OK.addActionListener(lSymAction);
 		JButton_Calcel.addActionListener(lSymAction);
 
@@ -152,8 +152,6 @@ public class AddCompanyForm extends FWForm {
 
 	}
 
-	
-
 	class SymAction implements java.awt.event.ActionListener {
 		public void actionPerformed(java.awt.event.ActionEvent event) {
 			Object object = event.getSource();
@@ -167,9 +165,9 @@ public class AddCompanyForm extends FWForm {
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event) {
 		try {
 			IAccount acc = null;
+			Integer zip = Integer.parseInt(JTextField_ZIP.getText());
 			Address add = new Address(JTextField_STR.getText(),
-					JTextField_CT.getText(), JTextField_ST.getText(),
-					JTextField_ZIP.getText());
+					JTextField_CT.getText(), JTextField_ST.getText(), zip);
 			int eCount = Integer.parseInt(JTextField_NoOfEmp.getText());
 			Company com = new Company(JTextField_NAME.getText(), add, eCount);
 			if (JRadioButton_Chk.isSelected())
@@ -183,8 +181,8 @@ public class AddCompanyForm extends FWForm {
 
 			dispose();
 		} catch (Exception e) {
-			JOptionPane
-					.showMessageDialog(this, "Invalid number (number of emp");
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Invalid number ");
 		}
 
 	}

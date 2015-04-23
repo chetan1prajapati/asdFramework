@@ -1,5 +1,6 @@
 package asd.creditCard;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import mum.asd.fw.FWTableModel;
@@ -71,7 +72,12 @@ public class CCTableModel extends FWTableModel {
 
 	public void refreshData() {
 
-		accountList = accountService.getAll();
+		try {
+			accountList = accountService.getAll();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for (IAccount account : accountList) {
 			System.out.println(account.getBalance());
 		}

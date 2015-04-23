@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="bankingApplication" class="mum.asd.fw.FWApplication"
+		init-method="init">
+		<property name="title" value="Banking Application" />
+		<property name="formButts">
+			<list>
+				<ref bean="addPersonal" />
+				<ref bean="addCompany" />
+			</list>
+		</property>
+
+		<property name="computeButts">
+			<list>
+				<ref bean="addInterest" />
+			</list>
+		</property>
+		<property name="dialogButts">
+			<list>
+				<ref bean="depositButton" />
+				<ref bean="withdrawButton" />
+			</list>
+		</property>
+
+		
+		<property name="personalAccForm" ref="personalAccForm"></property>
+		<property name="companyAccForm" ref="companyAccForm"></property>
+		<property name="addInterestController" ref="addInterestController"></property>
+		<property name="accountService" ref="accountService"></property>
+		<property name="transactionService" ref="transactionService"></property>
+		<property name="depositDialog" ref="depositDialog"></property>
+		<property name="withdrawDialog" ref="withdrawDialog"></property>
+		<property name="daoFactory" ref="hsqlDaoFactory"></property>
+		<property name="tableModel" ref="tableModel"></property>
+	</bean>
+
+
+	<bean id="hsqlDaoFactory" class="asd.bankapp.dao.HSQLDaoFactory">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="depositButton" class="mum.asd.fw.gui.DialogButton">
+		<constructor-arg value="Deposit"></constructor-arg>
+		<constructor-arg value="DEPOSIT"></constructor-arg>
+	</bean>
+	<bean id="withdrawButton" class="mum.asd.fw.gui.DialogButton">
+		<constructor-arg value="Withdraw"></constructor-arg>
+		<constructor-arg value="WITHDRAW"></constructor-arg>
+	</bean>
+
+	<bean id="addPersonal" class="mum.asd.fw.gui.FormButton">
+		<constructor-arg value="Add Personal Account"></constructor-arg>
+		<constructor-arg value="PERSONAL"></constructor-arg>
+	</bean>
+	<bean id="addCompany" class="mum.asd.fw.gui.FormButton">
+		<constructor-arg value="Add Company Account"></constructor-arg>
+		<constructor-arg value="COMPANY"></constructor-arg>
+	</bean>
+
+	<bean id="addInterest" class="mum.asd.fw.gui.ComputeButton">
+		<constructor-arg value="Add Interest"></constructor-arg>
+		<constructor-arg value="ADD_INTEREST"></constructor-arg>
+	</bean>
+
+	<bean id="accountService" class="asd.bankapp.BankAccountService">
+	</bean>
+	<bean id="transactionService" class="asd.bankapp.BankTransactionService">
+
+	</bean>
+
+	<!-- bean id="accountDao" class="asd.bankapp.dao.AccountDao"></bean> <bean 
+		id="transactionDao" class="asd.bankapp.dao.TransactionDao"></bean> -->
+
+	<bean id="tableModel" class="asd.bankapp.BankTableModel">
+		<constructor-arg ref="accountService"></constructor-arg>
+
+	</bean>
+	<bean id="depositDialog" class="mum.asd.fw.FWDialog">
+		<constructor-arg value="Deposit"></constructor-arg>
+		<constructor-arg ref="tableModel"></constructor-arg>
+		<property name="controller" ref="depositController"></property>
+	</bean>
+	<bean id="withdrawDialog" class="mum.asd.fw.FWDialog">
+		<constructor-arg value="Withdraw"></constructor-arg>
+		<constructor-arg ref="tableModel"></constructor-arg>
+		<property name="controller" ref="withdrawController"></property>
+	</bean>
+	<bean id="depositController" class="mum.asd.fw.controller.DepositController">
+		<constructor-arg ref="transactionService" />
+	</bean>
+	<bean id="withdrawController" class="mum.asd.fw.controller.WithdrawController">
+		<constructor-arg ref="transactionService"></constructor-arg>
+	</bean>
+	<bean id="addAccountController" class="mum.asd.fw.controller.AddAccountController">
+		<constructor-arg ref="accountService"></constructor-arg>
+	</bean>
+	<bean id="addInterestController" class="mum.asd.fw.controller.AddInterestController">
+		<constructor-arg ref="transactionService"></constructor-arg>
+		<constructor-arg ref="tableModel"></constructor-arg>
+	</bean>
+
+
+
+	<bean id="personalAccountForm" class="mum.asd.fw.form.PersonalAccountForm">
+	</bean>
+	<bean id="companyAccountForm" class="mum.asd.fw.form.CompanyAccountForm">
+	</bean>
+
+	<bean id="personalAccForm" class="mum.asd.fw.form.AddPersonalForm">
+		<constructor-arg value="Add personal Account"></constructor-arg>
+		<constructor-arg ref="personalAccountForm"></constructor-arg>
+		<constructor-arg ref="tableModel"></constructor-arg>
+		<property name="controller" ref="addAccountController"></property>
+		<property name="accountService" ref="accountService"></property>
+	</bean>
+
+
+	<bean id="companyAccForm" class="mum.asd.fw.form.AddCompanyForm">
+		<constructor-arg value="Add Company Account"></constructor-arg>
+		<constructor-arg ref="companyAccountForm"></constructor-arg>
+		<constructor-arg ref="tableModel"></constructor-arg>
+		<property name="controller" ref="addAccountController"></property>
+		<property name="accountService" ref="accountService"></property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="url" value="jdbc:hsqldb:data/bank" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+
+
+
+
+	<!-- List<FormButton> formButts; List<DialogButton> dialogButts; List<ReportButton> 
+		reportButts; List<ComputeButton> computeButts; -->
+
+</beans>

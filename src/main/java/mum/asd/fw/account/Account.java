@@ -6,6 +6,7 @@ public abstract class Account implements IAccount {
 	protected Integer accnr;
 	protected Customer customer;
 	protected double balance;
+	protected String expiryDate;
 
 	public Account(Customer customer) {
 		this.customer = customer;
@@ -44,14 +45,17 @@ public abstract class Account implements IAccount {
 	}
 
 	public abstract Double getInterestRate();
-	public void addEntry(IEntry e){
+
+	public void addEntry(IEntry e) {
 		checkEmailCondition(e);
 		updateBalance(e);
 		sendEmail();
 	}
-	
+
 	public abstract void checkEmailCondition(IEntry e);
+
 	public abstract void updateBalance(IEntry e);
+
 	public abstract void sendEmail();
 
 	@Override

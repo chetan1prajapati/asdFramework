@@ -1,5 +1,6 @@
 package mum.asd.fw.account;
 
+import asd.creditCard.account.CCType;
 import mum.asd.fw.party.Customer;
 
 public interface IAccount {
@@ -20,4 +21,12 @@ public interface IAccount {
 	Customer getCustomer();
 
 	Integer getAccnr();
+
+	void setExpiryDate(String expDate);
+
+	String getExpiryDate();
+
+	void setCCType(CCType ccType);
+
+	CCType getCCType();
 }

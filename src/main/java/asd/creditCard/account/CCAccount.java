@@ -1,6 +1,5 @@
-package asd.bankapp.account;
+package asd.creditCard.account;
 
-import asd.creditCard.account.CCType;
 import mum.asd.fw.account.Account;
 import mum.asd.fw.account.AccountType;
 import mum.asd.fw.account.Deposit;
@@ -8,16 +7,17 @@ import mum.asd.fw.account.IEntry;
 import mum.asd.fw.account.Withdraw;
 import mum.asd.fw.party.Customer;
 
-public class SavingAccount extends Account {
+public class CCAccount extends Account {
 	double interestRate = 0.01;
 	boolean emailflag;
+	CCType cCType;
 
-	public SavingAccount(Customer cust) {
+	public CCAccount(Customer cust) {
 		super(cust);
 	}
 
 	public AccountType getAccountType() {
-		return AccountType.SAVING;
+		return AccountType.CREDIT_CARD;
 	}
 
 	@Override
@@ -61,33 +61,23 @@ public class SavingAccount extends Account {
 	}
 
 	public String getExpiryDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public void setExpiryDate() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setCCType() {
-		// TODO Auto-generated method stub
-		
+		return expiryDate;
 	}
 
 	public CCType getCCType() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return cCType;
+	}
+
+
+	public void setCCType(CCType ccType) {
+		this.cCType = ccType;
+
 	}
 
 	public void setExpiryDate(String expDate) {
-		// TODO Auto-generated method stub
+		this.expiryDate = expDate;
 		
 	}
-
-	public void setCCType(CCType ccType) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

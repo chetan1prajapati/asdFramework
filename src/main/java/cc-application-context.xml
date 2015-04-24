@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="bankingApplication" class="mum.asd.fw.FWApplication"
+		init-method="init">
+		<property name="title" value="Credit Card Application" />
+		<property name="formButts">
+			<list>
+				<ref bean="addCCAccount" />
+			</list>
+		</property>
+
+
+		<property name="reportButts">
+			<list>
+				<ref bean="allAccountReport" />
+			</list>
+		</property>
+		<property name="dialogButts">
+			<list>
+				<ref bean="depositButton" />
+				<ref bean="chargeButton" />
+			</list>
+		</property>
+
+
+		<property name="ccAccForm" ref="ccAccForm"></property>
+		<property name="reportController" ref="reportController"></property>
+		<property name="accountService" ref="accountService"></property>
+		<property name="transactionService" ref="transactionService"></property>
+		<property name="depositDialog" ref="depositDialog"></property>
+		<property name="chargeDialog" ref="chargeDialog"></property>
+		<property name="reportDialog" ref="reportDialog"></property>
+		<property name="daoFactory" ref="hsqlDaoFactory"></property>
+		<property name="tableModel" ref="tableModel"></property>
+	</bean>
+
+
+	<bean id="hsqlDaoFactory" class="asd.creditCard.dao.HSQLDaoFactory">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="depositButton" class="mum.asd.fw.gui.DialogButton">
+		<constructor-arg value="Deposit"></constructor-arg>
+		<constructor-arg value="DEPOSIT"></constructor-arg>
+	</bean>
+	<bean id="chargeButton" class="mum.asd.fw.gui.DialogButton">
+		<constructor-arg value="Charge"></constructor-arg>
+		<constructor-arg value="CHARGE"></constructor-arg>
+	</bean>
+
+	<bean id="addCCAccount" class="mum.asd.fw.gui.FormButton">
+		<constructor-arg value="Add Credit Card Account"></constructor-arg>
+		<constructor-arg value="CREDIT_CARD"></constructor-arg>
+	</bean>
+
+
+	<bean id="allAccountReport" class="mum.asd.fw.gui.ReportButton">
+		<constructor-arg value="Generate Monthly Bill"></constructor-arg>
+		<constructor-arg value="MONTHLY_REPORT"></constructor-arg>
+	</bean>
+
+	<bean id="accountService" class="asd.creditCard.CCAccountService">
+	</bean>
+	<bean id="transactionService" class="asd.creditCard.CCTransactionService">
+
+	</bean>
+
+	<!-- bean id="accountDao" class="asd.bankapp.dao.AccountDao"></bean> <bean 
+		id="transactionDao" class="asd.bankapp.dao.TransactionDao"></bean> -->
+
+	<bean id="tableModel" class="asd.creditCard.CCTableModel">
+		<constructor-arg ref="accountService"></constructor-arg>
+
+	</bean>
+	<bean id="depositDialog" class="mum.asd.fw.FWDialog">
+		<constructor-arg value="Deposit"></constructor-arg>
+		<constructor-arg ref="tableModel"></constructor-arg>
+		<property name="controller" ref="depositController"></property>
+	</bean>
+	<bean id="chargeDialog" class="mum.asd.fw.FWDialog">
+		<constructor-arg value="Charge"></constructor-arg>
+		<constructor-arg ref="tableModel"></constructor-arg>
+		<property name="controller" ref="withdrawController"></property>
+	</bean>
+	<bean id="reportDialog" class="mum.asd.fw.FWReport">
+		<property name="accountService" ref="accountService"></property>
+		<property name="transactionService" ref="transactionService"></property>
+	</bean>
+	<bean id="depositController" class="mum.asd.fw.controller.DepositController">
+		<constructor-arg ref="transactionService" />
+	</bean>
+	<bean id="withdrawController" class="mum.asd.fw.controller.WithdrawController">
+		<constructor-arg ref="transactionService"></constructor-arg>
+	</bean>
+	<bean id="addAccountController" class="mum.asd.fw.controller.AddAccountController">
+		<constructor-arg ref="accountService"></constructor-arg>
+	</bean>
+	<bean id="reportController" class="mum.asd.fw.controller.ReportController">
+		<constructor-arg ref="transactionService"></constructor-arg>
+		<constructor-arg ref="tableModel"></constructor-arg>
+	</bean>
+
+
+
+	<bean id="ccAccountForm" class="mum.asd.fw.form.CCAccountForm">
+	</bean>
+
+
+	<bean id="ccAccForm" class="mum.asd.fw.form.AddCreditCardForm">
+		<constructor-arg value="Add Credit Card Account"></constructor-arg>
+		<constructor-arg ref="ccAccountForm"></constructor-arg>
+		<constructor-arg ref="tableModel"></constructor-arg>
+		<property name="controller" ref="addAccountController"></property>
+		<property name="accountService" ref="accountService"></property>
+	</bean>
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="url" value="jdbc:hsqldb:data/creditcard" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+
+
+
+
+	<!-- List<FormButton> formButts; List<DialogButton> dialogButts; List<ReportButton> 
+		reportButts; List<ComputeButton> computeButts; -->
+
+</beans>

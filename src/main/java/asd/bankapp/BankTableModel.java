@@ -77,9 +77,9 @@ public class BankTableModel extends FWTableModel {
 		try {
 			accountList.clear();
 			accountList.addAll(accountService.getAll());
-			for (IAccount account : accountList) {
-				System.out.println(account.getBalance());
-			}
+//			for (IAccount account : accountList) {
+//				System.out.println(account.getBalance());
+//			}
 		} catch (Exception e) {
  			logger.info("Sql exception on getting all account");
 		}

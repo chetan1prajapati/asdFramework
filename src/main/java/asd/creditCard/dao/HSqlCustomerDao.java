@@ -1,4 +1,4 @@
-package asd.bankapp.dao;
+package asd.creditCard.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

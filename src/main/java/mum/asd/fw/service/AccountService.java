@@ -16,6 +16,8 @@ public interface AccountService {
 
 	void addPersonalAccount(IAccount acc) throws SQLException;
 
+	void addCCAccount(IAccount acc) throws SQLException;
+
 	void setAccountDao(IAccountDao accountDao);
 
 	IAccountDao getAccountDao();

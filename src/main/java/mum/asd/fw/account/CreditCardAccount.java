@@ -1,8 +1,11 @@
 package mum.asd.fw.account;
 
 import mum.asd.fw.party.Customer;
+public class CreditCardAccount{
+	
+}
 
-public abstract class CreditCardAccount implements IAccount {
+abstract class CreditCardAccount1 implements IAccount {
 	private String ccNo;
 	private String expDate;
 	private double lastMonthBal;

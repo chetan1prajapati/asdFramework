@@ -1,4 +1,4 @@
-package asd.bankapp;
+package asd.creditCard;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -8,10 +8,10 @@ import mum.asd.fw.dao.IAccountDao;
 import mum.asd.fw.service.AccountService;
 import asd.bankapp.dao.AccountDao;
 
-public class BankAccountService implements AccountService {
+public class CCAccountService implements AccountService {
 	IAccountDao accountDao;
 
-	public BankAccountService() {
+	public CCAccountService() {
 
 	}
 
@@ -19,17 +19,17 @@ public class BankAccountService implements AccountService {
 
 	}
 
-	public List<IAccount> getAll() throws SQLException{
+	public List<IAccount> getAll() throws SQLException {
 
 		return accountDao.getAll();
 	}
 
-	public void addCompanyAccount(IAccount acc) throws SQLException{
+	public void addCompanyAccount(IAccount acc) throws SQLException {
 		accountDao.insert(acc);
 
 	}
 
-	public void addPersonalAccount(IAccount acc) throws SQLException{
+	public void addPersonalAccount(IAccount acc) throws SQLException {
 		accountDao.insert(acc);
 
 	}
@@ -45,8 +45,8 @@ public class BankAccountService implements AccountService {
 	}
 
 	public void addCCAccount(IAccount acc) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		accountDao.insert(acc);
+
 	}
 
 }

@@ -1,5 +1,6 @@
 package asd.bankapp.account;
 
+import asd.creditCard.account.CCType;
 import mum.asd.fw.account.Account;
 import mum.asd.fw.account.AccountType;
 import mum.asd.fw.account.Deposit;
@@ -39,7 +40,7 @@ public class CheckingAccount extends Account {
 
 	@Override
 	public void updateBalance(IEntry e) {
-		System.out.println("update balance");
+		//System.out.println("update balance");
 		if (e instanceof Deposit) {
 			balance += e.getAmount();
 		} else
@@ -65,5 +66,36 @@ public class CheckingAccount extends Account {
 		if (emailflag) {
 			System.out.println("email sent");
 		}
+	}
+
+	public String getExpiryDate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setExpiryDate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setCCType() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void setExpiryDate(String expDate) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setCCType(CCType ccType) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public CCType getCCType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

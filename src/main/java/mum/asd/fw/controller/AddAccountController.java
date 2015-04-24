@@ -19,4 +19,7 @@ public class AddAccountController {
 	public void addCompanyAccount(IAccount account) throws SQLException {
 		accountService.addCompanyAccount(account);
 	}
+	public void addCCAccount(IAccount account) throws SQLException {
+		accountService.addCCAccount(account);
+	}
 }

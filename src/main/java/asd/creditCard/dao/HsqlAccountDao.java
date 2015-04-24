@@ -1,4 +1,4 @@
-package asd.bankapp.dao;
+package asd.creditCard.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import asd.bankapp.account.CheckingAccount;
-import asd.bankapp.account.SavingAccount;
+import asd.creditCard.account.CCAccount;
 import asd.creditCard.account.CCType;
 import mum.asd.fw.account.Account;
 import mum.asd.fw.account.AccountType;
@@ -39,7 +38,7 @@ public class HsqlAccountDao implements IAccountDao {
 	public void insert(IAccount t) throws SQLException {
 		// TODO Auto-generated method stub
 
-		String query = " insert into ACCOUNT" + " values (null, ?, ?, ?)";
+		String query = " insert into ACCOUNT" + " values (null, ?, ?, ?,?,?)";
 
 		// create the hsqldb insert preparedstatement
 		PreparedStatement preparedStmt = connection.prepareStatement(query,
@@ -50,8 +49,8 @@ public class HsqlAccountDao implements IAccountDao {
 		preparedStmt.setInt(1, t.getCustomer().getId());
 		preparedStmt.setString(2, t.getAccountType().toString());
 		preparedStmt.setDouble(3, t.getBalance());
-		
-
+		preparedStmt.setString(4, t.getCCType().toString());
+		preparedStmt.setString(5, t.getExpiryDate());
 		Address a = t.getCustomer().getAddress();
 		a.setCustomer(t.getCustomer());
 		addressDao.insert(t.getCustomer().getAddress());
@@ -125,11 +124,7 @@ public class HsqlAccountDao implements IAccountDao {
 					rs.getString("ADDRESS.STATE"), rs.getInt("ADDRESS.ZIP"));
 			customer = new Customer(rs.getString("CUSTOMER.NAME"), address);
 
-			if (rs.getString("ACCOUNT.TYPE").equals(
-					AccountType.CHECKING.toString()))
-				account = new CheckingAccount(customer);
-			else
-				account = new SavingAccount(customer);
+			account = new CCAccount(customer);
 		}
 		preparedStmt.close();
 
@@ -166,15 +161,19 @@ public class HsqlAccountDao implements IAccountDao {
 			else
 				customer = new Person(rs.getString("NAME"), address,
 						rs.getString("DOB"));
-			if (rs.getString("ACCOUNT.ACCOUNT_TYPE").equals(
-					AccountType.CHECKING.toString()))
-				account = new CheckingAccount(customer);
 
-			else
-				account = new SavingAccount(customer);
+			account = new CCAccount(customer);
 			account.setAccnr(rs.getInt("ACCOUNT.ACCOUNT_ID"));
 			account.setBalance(rs.getDouble("ACCOUNT.BALANCE"));
-			
+			String str = rs.getString("ACCOUNT.CCTYPE").trim();
+			if (CCType.BRONZE.toString().equals(str))
+				account.setCCType(CCType.BRONZE);
+			else if (CCType.GOLD.toString().equals(str))
+				account.setCCType(CCType.GOLD);
+			else
+				account.setCCType(CCType.SILVER);
+			account.setExpiryDate(rs.getString("ACCOUNT.EXPDATE"));
+			//System.out.println(account.getExpiryDate());
 			lstAccount.add(account);
 		}
 		preparedStmt.close();

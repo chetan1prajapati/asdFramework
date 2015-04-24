@@ -16,8 +16,11 @@ public class ReportButtonListener implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-
+		
+		report.show1();
+		System.out.println("safsadfasdf");
 		report.setVisible(true);
+		
 
 	}
 

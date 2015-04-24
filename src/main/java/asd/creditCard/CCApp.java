@@ -49,7 +49,7 @@ public class CCApp {
 		ts.setTransactionDao(tDao);
 		
 		List<Column> cols = getColumns();
-		FWTableModel tm = new CCTableModel(cols, as);
+		FWTableModel tm = new CCTableModel(as);
 		app.setAccountService(as);
 		app.setTransactionService(ts);
 		tm.setAccountService(as);

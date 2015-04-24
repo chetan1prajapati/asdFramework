@@ -8,6 +8,7 @@ import mum.asd.fw.account.TransactionType;
 import mum.asd.fw.controller.AddAccountController;
 import mum.asd.fw.controller.AddInterestController;
 import mum.asd.fw.controller.DepositController;
+import mum.asd.fw.controller.ReportController;
 import mum.asd.fw.controller.TransactionController;
 import mum.asd.fw.controller.WithdrawController;
 import mum.asd.fw.dao.AbstractDaoFactory;
@@ -46,16 +47,19 @@ public class FWApplication {
 	FWDialog depositDialog;// = new FWDialog("Deposit",);
 	FWDialog withdrawDialog;// = new FWDialog("Withdraw");
 	FWDialog chargeDialog;// = new FWDialog("Charge");
+	
 	TransactionController depositController;
 	TransactionController withdrawController;
 	AddAccountController addAccountController;
+	ReportController reportController;
 
 	AddInterestController addInterestController;
 
 	FWForm personalAccForm;// = new FWForm("AddPersonalAccount");
 	FWForm companyAccForm;// = new FWForm("AddCompanyAccount");
+	FWForm ccAccForm;
 
-	FWReport monthlyReport;
+	FWReport reportDialog;
 
 	public FWApplication() {
 		formButts = new ArrayList<FormButton>();
@@ -131,7 +135,7 @@ public class FWApplication {
 		case COMPANY:
 			return companyAccForm;
 		case CREDIT_CARD:
-			return null;
+			return ccAccForm;
 		}
 		return null;
 	}
@@ -139,7 +143,7 @@ public class FWApplication {
 	public FWReport getReport(ReportType reportType) {
 		switch (reportType) {
 		case MONTHLY_REPORT:
-			return monthlyReport;
+			return reportDialog;
 		}
 		return null;
 	}
@@ -234,5 +238,33 @@ public class FWApplication {
 	public AccountService getAccountService() {
 		return accountService;
 	}
+
+	public ReportController getReportController() {
+		return reportController;
+	}
+
+	public void setReportController(ReportController reportController) {
+		this.reportController = reportController;
+	}
+
+	public FWForm getCcAccForm() {
+		return ccAccForm;
+	}
+
+	public void setCcAccForm(FWForm ccAccForm) {
+		this.ccAccForm = ccAccForm;
+	}
+
+	public FWReport getReportDialog() {
+		return reportDialog;
+	}
+
+	public void setReportDialog(FWReport reportDialog) {
+		this.reportDialog = reportDialog;
+	}
+
+	
+	
+	
 
 }

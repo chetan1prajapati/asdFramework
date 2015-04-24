@@ -23,7 +23,7 @@ public class FWForm extends JDialog implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("sfasdf");
+	//	System.out.println("sfasdf");
 
 	}
 

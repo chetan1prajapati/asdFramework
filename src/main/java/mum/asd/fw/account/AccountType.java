@@ -1,5 +1,5 @@
 package mum.asd.fw.account;
 
 public enum AccountType {
-	CHECKING, SAVING;
+	CHECKING, SAVING, CREDIT_CARD;
 }

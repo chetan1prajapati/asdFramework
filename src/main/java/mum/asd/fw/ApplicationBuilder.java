@@ -56,6 +56,7 @@ public class ApplicationBuilder {
 			JButton b = new JButton(rb.getLabel());
 			b.addActionListener(new ReportButtonListener(app.getReport(rb
 					.getReportType())));
+			panel1.add(b);
 		}
 
 		FWTableModel model = app.getTableModel();
